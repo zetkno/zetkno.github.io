@@ -1,0 +1,904 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技能,java web," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="zetkno's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一.前言&amp;nbsp; &amp;nbsp;&amp;nbsp;以前做过的项目中，没有真正的使用过Maven，只知道其名声很大，其作用是用来管理jar 包的。最近一段时间在项目过程中使用Maven，用Maven构建的web项目，其项目结构只停留在了解阶段，没有深入的使用与理解，刚好最近看了一篇关于Maven的详解；就开始深入学习一下Maven的具体应用。二.Maven的作用在开发中，为了保证编译通过，我们会到处去寻">
+<meta name="keywords" content="技能,java web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven详解">
+<meta property="og:url" content="http://yoursite.com/2017/06/06/maven详解/index.html">
+<meta property="og:site_name" content="zetkno&#39;s Blog">
+<meta property="og:description" content="一.前言&amp;nbsp; &amp;nbsp;&amp;nbsp;以前做过的项目中，没有真正的使用过Maven，只知道其名声很大，其作用是用来管理jar 包的。最近一段时间在项目过程中使用Maven，用Maven构建的web项目，其项目结构只停留在了解阶段，没有深入的使用与理解，刚好最近看了一篇关于Maven的详解；就开始深入学习一下Maven的具体应用。二.Maven的作用在开发中，为了保证编译通过，我们会到处去寻">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323142502401-108348091.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323142310370-1439246574.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100101026-1407305763.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100124604-2030468802.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100137573-1877333407.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100259839-1317690761.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160324212234058-1064175606.png">
+<meta property="og:updated_time" content="2017-06-06T12:13:42.395Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="maven详解">
+<meta name="twitter:description" content="一.前言&amp;nbsp; &amp;nbsp;&amp;nbsp;以前做过的项目中，没有真正的使用过Maven，只知道其名声很大，其作用是用来管理jar 包的。最近一段时间在项目过程中使用Maven，用Maven构建的web项目，其项目结构只停留在了解阶段，没有深入的使用与理解，刚好最近看了一篇关于Maven的详解；就开始深入学习一下Maven的具体应用。二.Maven的作用在开发中，为了保证编译通过，我们会到处去寻">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323142502401-108348091.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/06/maven详解/"/>
+
+
+
+
+
+  <title>maven详解 | zetkno's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zetkno's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      <li>
+          <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 15500)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 350;
+  var r = 350;
+  var i = "//101.44.1.121/files/4254000003589B7A/yinyueshiting.baidu.com/data2/music/134379742/1201250291429761661128.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()    '>High一下</a>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/06/maven详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jiuming Han">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/githubstart.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zetkno's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">maven详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T19:47:37+08:00">
+                2017-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他技能/" itemprop="url" rel="index">
+                    <span itemprop="name">其他技能</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div id="cnblogs_post_body"><p><strong>一.前言</strong></p><br><p><strong>&nbsp; &nbsp;&nbsp;</strong>以前做过的项目中，没有真正的使用过Maven，只知道其名声很大，其作用是用来管理jar 包的。最近一段时间在项目过程中使用Maven，用Maven构建的web项目，其项目结构只停留在了解阶段，没有深入的使用与理解，刚好最近看了一篇关于Maven的详解；就开始深入学习一下Maven的具体应用。</p><br><p><strong>二.Maven的作用</strong></p><br><ol><br><li>在开发中，为了保证编译通过，我们会到处去寻找jar包，当编译通过了，运行的时候，却发现”ClassNotFoundException”，我们想到的是，难道还差jar包？</li><br><li>每个Java项目的目录结构都没有一个统一的标准，配置文件到处都是，单元测试代码到底应该放在那里也没有一个权威的规范。</li><br><li>因此，我们就要用到Maven（使用Ant也可以，不过编写Ant的xml脚本比较麻烦）—-一个<strong>项目管理工具</strong>。</li><br><li>Maven主要做了两件事：</li><br></ol><br><ul><br><li>统一开发规范与工具</li><br><li>统一管理jar包</li><br></ul><br><p>&nbsp; &nbsp;&nbsp;下面我们来对比一下，首先建立一个普通的Java工程，是这样的：</p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323142502401-108348091.png" alt=""></p><br><p>&nbsp; &nbsp;这个我们都很熟悉，src下建包写代码，那么配置文件放在哪里？单元测试代码放在哪里？没有一个统一标准，更多时候都是开发者的自由发挥，每个人有自己的风格，这并不十分适合团队协作。接下来，看一下使用maven构建一个普通Java项目之后的目录结构：</p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323142310370-1439246574.png" alt=""></p><br><p>看到使用Maven构建的普通Java项目，对源代码、单元测试代码、资源乃至后续需要的文件都有专门的目录规划。</p><br><p>上面的最后有一个pom.xml，这是Maven的核心配置文件，pom称为Project Object Model（<strong>项目对象模型</strong>），它用于描述整个Maven项目，所以也称为Maven描述文件。</p><br><p>当然事情不会这么简单，接下来，继续进入Maven的世界吧。</p><br><p><strong>pom.xml</strong></p><br><p>打开pom.xml，最基础的是这样的：</p><br><div class="cnblogs_Highlighter sh-gutter"><br><div><div id="highlighter_100065" class="syntaxhighlighter  csharp"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">&lt;project xmlns=</code><code class="csharp string">“<a href="http://maven.apache.org/POM/4.0.0" target="_blank" rel="external">http://maven.apache.org/POM/4.0.0</a>“</code></div><div class="line number2 index1 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">xmlns:xsi=</code><code class="csharp string">“<a href="http://www.w3.org/2001/XMLSchema-instance" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance</a>“</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">xsi:schemaLocation=</code><code class="csharp string">“<a href="http://maven.apache.org/POM/4.0.0" target="_blank" rel="external">http://maven.apache.org/POM/4.0.0</a> <a href="http://maven.apache.org/xsd/maven-4.0.0.xsd" target="_blank" rel="external">http://maven.apache.org/xsd/maven-4.0.0.xsd</a>“</code><code class="csharp plain">&gt;</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;</code><code class="csharp plain">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;</code><code class="csharp plain">&lt;groupId&gt;com.xrq.withmaven&lt;/groupId&gt;</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;</code><code class="csharp plain">&lt;artifactId&gt;withmaven&lt;/artifactId&gt;</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;</code><code class="csharp plain">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;</code><code class="csharp plain">&lt;build/&gt;</code></div><div class="line number10 index9 alt1"><code class="csharp plain">&lt;/project&gt;</code></div></div></td></tr></tbody></table></div></div><br></div><br><p>因为这个配置文件是Maven的核心，因此有必要详细解读一下pom.xml，来先看一下上面的几个：</p><br><p><strong>1、modelVersion</strong></p><br><p>　　指定了当前Maven模型的版本号，对于Maven2和Maven3来说，它只能是4.0.0</p><br><p><strong>2、groupId</strong></p><br><p>　　顾名思义，这个应该是公司名或是组织名。一般来说groupId是由三个部分组成，每个部分之间以”.”分隔，第一部分是项目用途，比如用于商业的就是”com”，用于非营利性组织的就　　是”org”；第二部分是公司名，比如”tengxun”、”baidu”、”alibaba”；第三部分是你的项目名</p><br><p><strong>3、artifactId</strong></p><br><p>　　可以认为是Maven构建的项目名，比如你的项目中有子项目，就可以使用”项目名-子项目名”的命名方式</p><br><p><strong>4、version</strong></p><br><p>　　版本号，SNAPSHOT意为快照，说明该项目还在开发中，是不稳定的版本。在Maven中很重要的一点是，<span style="color: #ff0000;"><strong>groupId、artifactId、version三个元素生成了一个Maven项目的基本坐标</strong></span>，这非常重要，我在使用和研究Maven的时候多次感受到了这点。</p><br><p>在上面的这些元素之外，还有一些元素，同样罗列一下：</p><br><p><strong>1、packing</strong></p><br><p>　　项目打包的类型，可以使jar、war、rar、ear、pom，默认是jar</p><br><p><strong>2、dependencies和dependency</strong></p><br><p>　　前者包含后者。前面说了，Maven的一个重要作用就是统一管理jar包，为了一个项目可以build或运行，项目中不可避免的，会依赖很多其他的jar包，在Maven中，这些依赖就被称为dependency。</p><br><p>　　说到这里，就有一个<span style="color: #ff0000;"><strong>本地仓库</strong></span>和<span style="color: #ff0000;"><strong>远程仓库</strong></span>的概念了。官方下载的本地仓库的配置在”%MAVEN_HOME%\conf\settings.xml”里面，找一下”localRepository”就可以了；MyEclipse默认的本地仓库的地址在”{user.home}/.m2/repository”路径下，同样找一下”localRepository”就可以找到MyEclipse默认的本地仓库了。</p><br><p>　　本地仓库和远程仓库是这样的，<span style="color: #ff0000;"><strong>Maven工程首先会从本地仓库中获取jar包，当无法获取指定jar包时，本地仓库会从远程仓库（中央仓库）中下载jar包，并放入本地仓库以备将来使用</strong></span>。</p><br><p>　　举个例子，比方说我的项目中用到了MyBatis，那么可以这么配置：</p><br><div class="cnblogs_Highlighter sh-gutter"><br><div><div id="highlighter_349928" class="syntaxhighlighter  csharp"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">&lt;dependencies&gt;</code></div><div class="line number2 index1 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;dependency&gt;</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;groupId&gt;org.mybatis&lt;/groupId&gt;</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;artifactId&gt;mybatis&lt;/artifactId&gt;</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;version&gt;3.2.5&lt;/version&gt;</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;/dependency&gt;</code></div><div class="line number7 index6 alt2"><code class="csharp plain">&lt;/dependencies&gt;</code></div></div></td></tr></tbody></table></div></div><br></div><br><p>&nbsp; &nbsp; 之前有说过groupId、artifactId、version唯一标识一个Maven项目，有了这三个元素，我们就可以去远程仓库下载MyBatis3.2.5.jar到本地仓库了。回想我们之前的做法，如果要MyBatis的jar包，发现没有，然后去网上下载一个，需要另外的jar包，然后去网上下载一个，但是有了Maven，就方便多了，只需要配置jar包对应的dependency依赖，Maven会自动帮助我们去远程仓库中下载jar包到本地仓库中。</p><br><p><strong>3、properties</strong></p><br><p>　　properties是用来定义一些配置属性的，例如project.build.sourceEncoding（项目构建源码编码方式），可以设置为UTF-8，防止中文乱码，也可定义相关构建版本号，便于日后统一升级。</p><br><p><strong>4、build</strong></p><br><p>　　build表示与构建相关的配置，比如build下有finalName，表示的就是最终构建之后的名称。</p><br><p>接着解释一下Maven的目录结构：</p><br><ul><br><li>main目录下是项目的主要代码，test目录下存放测试相关的代码</li><br><li>编译输出后的代码会放在target目录下</li><br><li>src/main/java下存放Java代码，src/main/resources下存放配置文件</li><br><li>这里没有webapp，Web项目会有webapp目录，webapp下存放Web应用相关代码</li><br><li>pom.xml是Maven项目的配置文件</li><br></ul><br><p><strong>三.Maven环境配置</strong></p><br><p>常用的开发工具Idea、MyEclipse里面都已经集成了Maven了，不过最好是从官网下一个配置到自己电脑里，开发工具里的可能有少许的Bug。</p><br><p>首先去Maven官网，下载Maven的包，地址为<a href="http://maven.apache.org/download.cgi，找到下面的部分，点击就可以下载了：" target="_blank" rel="external">http://maven.apache.org/download.cgi，找到下面的部分，点击就可以下载了：</a></p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100101026-1407305763.png" alt="" width="906" height="144"></p><br><p>下载完解压，然后配置一下环境变量，和JDK的环境变量配置类似：</p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100124604-2030468802.png" alt="" width="351" height="195"></p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100137573-1877333407.png" alt="" width="352" height="194"></p><br><p>这样配置完就可以了，验证一下，windows+r打开命令窗口，输入”mvn –version”，如果有下面的内容这表示Maven配置OK：</p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160323100259839-1317690761.png" alt="" width="573" height="120"></p><br><p>&nbsp;</p><br><p><strong>Maven入门使用常见问题</strong></p><br><p><strong>1、我从SVN上下载了一个以Maven构建的工程，下载完毕没有jar包怎么办？</strong></p><br><p>从资源库上下载下来的Maven工程，是没有jar包的，此时可以这么做：</p><br><p>（1）删除Maven工程，但是删除的时候不要删除本地工程里面的Maven工程，只删除MyEclipse中的Maven工程</p><br><p>（2）右键Import-&gt;Maven4MyEclipse-&gt;Existing Maven Projects，导入你的Maven工程，此时MyEclipse在构建工程的时候，假如你的本地仓库中没有dependcy中的jar包，便会去远程仓库下载jar包到本地仓库中。你的工程导入完毕之后，Library应该是这样的：</p><br><p><img src="http://images2015.cnblogs.com/blog/801753/201603/801753-20160324212234058-1064175606.png" alt=""></p><br><p><strong>2、重新下载Maven工程所依赖的jar包、导入jar包都需要触发Maven工程的build workspace，那么如何才能触发Maven工程的build workspace？</strong></p><br><p>找到一个pom.xml，随便修改一下，加一个空格、减一个空格什么的，ctrl+s保存一下，便会触发Maven工程的build workspace了</p><br><p><strong>3、本地仓库的目录结构是什么样子的？</strong></p><br><p>groupId、artifactId、version确定一个唯一的Maven，比方说我有一个mybatis的dependcy:</p><br><div class="cnblogs_Highlighter sh-gutter"><br><div><div id="highlighter_933448" class="syntaxhighlighter  csharp"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">&lt;dependency&gt;</code></div><div class="line number2 index1 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;groupId&gt;org.mybatis&lt;/groupId&gt;</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;artifactId&gt;mybatis&lt;/artifactId&gt; </code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;version&gt;3.2.5&lt;/version&gt;</code></div><div class="line number5 index4 alt2"><code class="csharp plain">&lt;/dependency&gt;</code></div></div></td></tr></tbody></table></div></div><br></div><br><p>那么mybatis的jar包应该在%Maven仓库地址%\org\mybatis\mybatis\3.2.5\这一路径下，看到了吧，先groupId，再mybatis，最后version，每个名字都是一个文件夹的名字</p><br><p><strong>4、有些jar包在dependcy里面有配置，Import了Maven工程，下载完工程所依赖的jar包之后，发现本地仓库里面却没有，怎么办？</strong></p><br><p>可能是原先下载jar包的时候出了什么问题，从artifactId目录开始删除以下的所有文件/文件夹，然后触发一次Maven工程的build workspace就可以了</p><br><p><strong>5、本地仓库中确定已经有jar包了，工程里面却报错，说找不到jar包，该怎么办？</strong></p><br><p>应该有很多解决办法，目前解决的一种办法是，MyEclipse-&gt;Window-&gt;Preferences-&gt;搜索Maven-&gt;User Settings,Update Settings和Reindex点一下就好了。另外，可以尝试一下把本地Maven仓库内的jar包删除一下，然后重新build workspace，可能也可以。</p><br><p>　　</p></div>
+
+<p><small>来源：<a href="http://www.cnblogs.com/hongwz/p/5456578.html" title="独具匠心" target="_blank" rel="external">独具匠心</a></small></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技能/" rel="tag"># 技能</a>
+          
+            <a href="/tags/java-web/" rel="tag"># java web</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/24/test/" rel="next" title="测试文章">
+                <i class="fa fa-chevron-left"></i> 测试文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/githubstart.jpg"
+               alt="Jiuming Han" />
+          <p class="site-author-name" itemprop="name">Jiuming Han</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zetkno" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/han-jiu-ming/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <br>
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=26508242&auto=1&height=66"></iframe>
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiuming Han</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
