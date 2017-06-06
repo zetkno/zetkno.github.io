@@ -42,24 +42,4 @@
     
   </entry>
   
-  <entry>
-    <title>测试文章</title>
-    <link href="http://yoursite.com/2017/05/24/test/"/>
-    <id>http://yoursite.com/2017/05/24/test/</id>
-    <published>2017-05-24T06:24:55.000Z</published>
-    <updated>2017-05-24T06:42:57.464Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="Testing" scheme="http://yoursite.com/categories/Testing/"/>
-    
-    
-      <category term="Testing" scheme="http://yoursite.com/tags/Testing/"/>
-    
-      <category term="Another Tag" scheme="http://yoursite.com/tags/Another-Tag/"/>
-    
-  </entry>
-  
 </feed>
